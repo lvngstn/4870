@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maui.eCommerce.Views.CheckoutView"
+             Title="CheckoutView">
+    <VerticalStackLayout>
+        <Grid>
+            <!--USER SHOPPING CART-->
+            <Grid Grid.Column="1">
+                <ListView Grid.Row="0"
+                    ItemsSource="{Binding ShoppingCart}"
+                    SelectedItem="{Binding SelectedCartItem }"
+                >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="0.1*"/>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding Id}"/>
+                                    <Label Grid.Column="1" Text="{Binding Product.Name}"/>
+                                    <Label Grid.Column="2" Text="x"/>
+                                    <Label Grid.Column="3" Text="{Binding Quantity}"/>
+                                    <Label Grid.Column="4" Text="{Binding Product.Price, StringFormat='${0:F2}'}"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+        <Label HorizontalTextAlignment="End" Text="{Binding Cost, StringFormat='Total: ${0:F2}'}"/>
+        <Button Text="Go Back" Clicked="CancelClicked"/>
+        <Button Text="Purchase" Clicked="PurchaseClicked"/>
+    </VerticalStackLayout>
+</ContentPage>

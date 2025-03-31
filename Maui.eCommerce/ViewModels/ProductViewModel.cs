@@ -38,7 +38,23 @@ namespace Maui.eCommerce.ViewModels
             {
                 if (Model != null && Model.Quantity != value)
                 {
-                    Model.Quantity = value;
+                    Model.Quantity = value ?? 0;
+                }
+            }
+        }
+
+        public int? Price
+        {
+            get
+            {
+                return Model?.Product?.Price;
+            }
+
+            set
+            {
+                if (Model != null && Model?.Product?.Price != value)
+                {
+                    Model.Product.Price = value ?? 0;
                 }
             }
         }

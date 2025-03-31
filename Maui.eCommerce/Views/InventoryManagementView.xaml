@@ -15,29 +15,61 @@
             <Button Text="Search" Grid.Column="1" Clicked="SearchClicked"/>
         </Grid>
         <ListView
-            ItemsSource="{Binding Path=Products}"
-            SelectedItem="{Binding SelectedProduct}"
-            >
+            ItemsSource="{Binding Products}"
+            SelectedItem="{Binding SelectedProduct}">
+            <ListView.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.7*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.7*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Text="ID" FontAttributes="Bold"/>
+                    <Label Grid.Column="1" Text="Product Name" FontAttributes="Bold"/>
+                    <Label Grid.Column="2" Text="Price" FontAttributes="Bold"/>
+                    <Label Grid.Column="3" Text=""/>
+                    <Label Grid.Column="4" Text="Quantity" FontAttributes="Bold"/>
+                    <Label Grid.Column="5" Text=""/>
+                    <Label Grid.Column="6" Text=""/>
+                    <Label Grid.Column="7" Text=""/>
+                </Grid>
+            </ListView.Header>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="10*"/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="0.7*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="0.7*"/>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Text="{Binding Display}"/>
-                            <Button Grid.Column="1" Text="Edit"/>
-                            <Button Grid.Column="2" Text="Delete"/>
+
+                            <Label Grid.Column="0" Text="{Binding Id}"/>
+                            <Label Grid.Column="1" Text="{Binding Product.Name}"/>
+                            <Label Grid.Column="2" Text="{Binding Product.Price, StringFormat='${0:F2}'}}"/>
+                            <Button Grid.Column="3" Text="-" Clicked="DecrementQuantityClicked"/>
+                            <Label Grid.Column="4" Text="{Binding Quantity}"/>
+                            <Button Grid.Column="5" Text="+" Clicked="IncrementQuantityClicked"/>
+                            <Button Grid.Column="6" Text="Edit" Clicked="EditClicked"/>
+                            <Button Grid.Column="7" Text="Delete" Clicked="DeleteClicked"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Text="Add" Clicked="AddClicked"/>
-        <Button Text="Edit" Clicked="EditClicked"/>
-        <Button Text="Delete" Clicked="DeleteClicked"/>
+
+        <Button Text="Add New Product" Clicked="AddClicked"/>
         <Button Text="Go Back" Clicked="CancelClicked"/>
     </VerticalStackLayout>
 </ContentPage>

@@ -3,28 +3,77 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Maui.eCommerce.Views.ShoppingManagementView"
              Title="ShoppingManagementView">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/><!--STORE-->
-            <ColumnDefinition/><!--USER SHOPPING CART-->
-        </Grid.ColumnDefinitions>
+    <VerticalStackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-        <!--STORE-->
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="10*"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <ListView Grid.Row="0"
-                ItemsSource="{Binding Inventory}"
-                SelectedItem="{Binding SelectedItem}"
-                />
-            <Button Grid.Row="1" Text="+" Clicked="AddToCartClicked"/>
-        </Grid>
+            <!--STORE-->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <ListView Grid.Row="0"
+                    ItemsSource="{Binding Inventory}"
+                    SelectedItem="{Binding SelectedItem}"
+                >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="0.1*"/>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding Id}"/>
+                                    <Label Grid.Column="1" Text="{Binding Product.Name}"/>
+                                    <Label Grid.Column="2" Text="x"/>
+                                    <Label Grid.Column="3" Text="{Binding Quantity}"/>
+                                    <Button Grid.Column="4" Text="+" Clicked="AddToCartClicked"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
 
-        <!--USER SHOPPING CART-->
-        <Grid Grid.Column="1">
-            
+            <!--USER SHOPPING CART-->
+            <Grid Grid.Column="1">
+                <ListView Grid.Row="0"
+                    ItemsSource="{Binding ShoppingCart}"
+                    SelectedItem="{Binding SelectedCartItem }"
+                >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="0.1*"/>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding Id}"/>
+                                    <Label Grid.Column="1" Text="{Binding Product.Name}"/>
+                                    <Label Grid.Column="2" Text="x"/>
+                                    <Label Grid.Column="3" Text="{Binding Quantity}"/>
+                                    <Button Grid.Column="4" Text="-" Clicked="RemoveFromCartClicked"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         </Grid>
-    </Grid>
+        <Label HorizontalTextAlignment="End" Text="{Binding Cost, StringFormat='Total: ${0:F2}'}"/>
+        <Button Text="Go Back" Clicked="CancelClicked"/>
+        <Button Text="Checkout" Clicked="CheckoutClicked"/>
+    </VerticalStackLayout>
 </ContentPage>

@@ -8,12 +8,8 @@
             <Label
                 Text="{Binding Display}"
                 />
-            <Button
-            Text="Inventory Management"
-                Clicked="InventoryClicked"/>
-            <Button
-            Text="Shop"
-                Clicked="ShopClicked"/>
+            <Button Text="Inventory Management" Clicked="InventoryClicked"/>
+            <Button Text="Shop" Clicked="ShopClicked"/>
         </VerticalStackLayout>
     </ScrollView>
 

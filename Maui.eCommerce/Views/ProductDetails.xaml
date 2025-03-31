@@ -10,16 +10,20 @@
             Text="Name:"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Entry
-            Text="{Binding Name}"
-            />
+        <Entry Text="{Binding Name}"/>
+        
         <Label 
             Text="Quantity:"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Entry
-            Text="{Binding Quantity}"
-            />
+        <Entry Text="{Binding Quantity}"/>
+
+        <Label 
+            Text="Price:"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Entry Text="{Binding Price}"/>
+
         <Button Text="Ok" Clicked="OkClicked"/>
         <Button Text="Go Back" Clicked="GoBackClicked"/>
     </VerticalStackLayout>

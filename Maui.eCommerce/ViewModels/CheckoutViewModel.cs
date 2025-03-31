@@ -1,4 +1,4 @@
-﻿using Library.eCommerce.Models;
+using Library.eCommerce.Models;
 using Library.eCommerce.Services;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Maui.eCommerce.ViewModels
 {
-    public class ShoppingManagementViewModel : INotifyPropertyChanged
+    public class CheckoutViewModel : INotifyPropertyChanged
     {
         private readonly ProductServiceProxy _invSvc = ProductServiceProxy.Current;
         private readonly ShoppingCartService _cartSvc = ShoppingCartService.Current;
@@ -25,8 +25,8 @@ namespace Maui.eCommerce.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private int? _cost;
-        public int? Cost
+        private double? _cost;
+        public double? Cost
         {
             get => _cost;
             private set
@@ -58,7 +58,7 @@ namespace Maui.eCommerce.ViewModels
             }
         }
 
-        public ShoppingManagementViewModel() => RefreshInventory();
+        public CheckoutViewModel() => RefreshInventory();
 
         public void RefreshInventory()
         {
@@ -73,44 +73,22 @@ namespace Maui.eCommerce.ViewModels
             calculateCost();
         }
 
-        public void PurchaseItem()
-        {
-            if (SelectedItem != null)
-            {
-                var shouldRefresh = SelectedItem.Quantity > 0;
-                var updatedItem = _cartSvc.AddOrUpdate(SelectedItem);
-
-                if (updatedItem != null && shouldRefresh)
-                {
-                    RefreshInventory();
-                }
-            }
-        }
-
-        public void DecrementQuantity()
-        {
-            if (SelectedCartItem != null)
-            {
-                var shouldRefresh = SelectedCartItem.Quantity > 0;
-                var updatedItem = _cartSvc.DecrementQuantity(SelectedCartItem);
-
-                if (updatedItem != null && shouldRefresh)
-                {
-                    RefreshInventory();
-                }
-            }
-        }
-
         public void calculateCost()
         {
-            int totalCost = 0;
+            double totalCost = 0;
 
             foreach (Item? i in ShoppingCart)
             {
                 totalCost += (i?.Product?.Price ?? 0) * (i?.Quantity ?? 0);
             }
 
-            Cost = totalCost;
+            Cost = totalCost * 1.07;
+        }
+
+        public void PurchaseCart()
+        {
+            _cartSvc.ClearCart();
+            RefreshInventory();
         }
     }
 }

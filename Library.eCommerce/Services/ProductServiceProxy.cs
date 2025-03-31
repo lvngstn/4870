@@ -14,9 +14,9 @@ namespace Library.eCommerce.Services
         {
             Products = new List<Item?>
             {
-                new Item{ Product = new Product{Id = 1, Name ="Product 1"}, Id = 1, Quantity = 1 },
-                new Item{ Product = new Product{Id = 2, Name ="Product 2"}, Id = 2 , Quantity = 2 },
-                new Item{ Product = new Product{Id = 3, Name ="Product 3"}, Id=3 , Quantity = 3 }
+                new Item{ Product = new Product{Id = 1, Name = "Headphones", Price = 123}, Id = 1, Quantity = 1 },
+                new Item{ Product = new Product{Id = 2, Name = "Phone", Price = 456}, Id = 2 , Quantity = 2 },
+                new Item{ Product = new Product{Id = 3, Name = "Laptop", Price = 789}, Id = 3 , Quantity = 3 }
             };
         }
 
@@ -60,6 +60,7 @@ namespace Library.eCommerce.Services
             {
                 item.Id = LastKey + 1;
                 item.Product.Id = item.Id;
+                item.Product.Price = item.Product.Price;
                 Products.Add(item);
             }
 
@@ -85,7 +86,17 @@ namespace Library.eCommerce.Services
             return Products.FirstOrDefault(p => p.Id == id);
         }
 
+        public Item? IncrementQuantity(int id)
+        {
+            var item = GetById(id);
+            item?.IncrementQuantity();
+            return item;
+        }
+        public Item? DecrementQuantity(int id)
+        {
+            var item = GetById(id);
+            item?.DecrementQuantity();
+            return item;
+        }
     }
-
-    
 }

@@ -1,5 +1,6 @@
 using Library.eCommerce.Services;
 using Maui.eCommerce.ViewModels;
+using Library.eCommerce.Models;
 
 namespace Maui.eCommerce.Views;
 
@@ -13,7 +14,28 @@ public partial class InventoryManagementView : ContentPage
 
     private void DeleteClicked(object sender, EventArgs e)
     {
-        (BindingContext as InventoryManagementViewModel)?.Delete();
+        if (sender is Button button && button.BindingContext is Item item)
+        {
+            (BindingContext as InventoryManagementViewModel)!.SelectedProduct = item;
+            (BindingContext as InventoryManagementViewModel)!.Delete();
+        }
+    }
+
+    private void IncrementQuantityClicked(object sender, EventArgs e)
+    {
+        if (sender is Button button && button.BindingContext is Item item)
+        {
+            (BindingContext as InventoryManagementViewModel)!.SelectedProduct = item;
+            (BindingContext as InventoryManagementViewModel)!.IncrementQuantity();
+        }
+    }
+    private void DecrementQuantityClicked(object sender, EventArgs e)
+    {
+        if (sender is Button button && button.BindingContext is Item item)
+        {
+            (BindingContext as InventoryManagementViewModel)!.SelectedProduct = item;
+            (BindingContext as InventoryManagementViewModel)!.DecrementQuantity();
+        }
     }
 
     private void CancelClicked(object sender, EventArgs e)

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Library.eCommerce.Services;
+using Library.eCommerce.Models;
 using Spring2025_Samples.Models;
 using System;
 using System.Collections.Generic;
@@ -16,18 +17,20 @@ namespace Maui.eCommerce.ViewModels
     {
         public Item? SelectedProduct { get; set; }
         public string? Query { get; set; }
-        private ProductServiceProxy _svc = ProductServiceProxy.Current;
+        private readonly ProductServiceProxy _svc = ProductServiceProxy.Current;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            if (propertyName is null)
+            if (propertyName is not null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+            else
             {
                 throw new ArgumentNullException(nameof(propertyName));
             }
-
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public void RefreshProductList()
@@ -47,8 +50,24 @@ namespace Maui.eCommerce.ViewModels
         public Item? Delete()
         {
             var item = _svc.Delete(SelectedProduct?.Id ?? 0);
-            NotifyPropertyChanged("Products");
+            NotifyPropertyChanged(nameof(Products));
             return item;
         }
+
+        public Item? IncrementQuantity()
+        {
+            Console.WriteLine(SelectedProduct?.Id ?? -1);
+            var item = _svc.IncrementQuantity(SelectedProduct?.Id ?? 0);
+            NotifyPropertyChanged(nameof(Products));
+            return item;
+        }
+        public Item? DecrementQuantity()
+        {
+            Console.WriteLine(SelectedProduct?.Id ?? -1);
+            var item = _svc.DecrementQuantity(SelectedProduct?.Id ?? 0);
+            NotifyPropertyChanged(nameof(Products));
+            return item;
+        }
+
     }
 }
