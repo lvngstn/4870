@@ -17,9 +17,6 @@ namespace Maui.eCommerce.ViewModels
         private readonly ShoppingCartService _cartSvc = ShoppingCartService.Current;
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public Item? SelectedItem { get; set; }
-        public Item? SelectedCartItem { get; set; }
-
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -70,10 +67,10 @@ namespace Maui.eCommerce.ViewModels
 
             NotifyPropertyChanged(nameof(Inventory));
             NotifyPropertyChanged(nameof(ShoppingCart));
-            calculateCost();
+            CalculateCost();
         }
 
-        public void calculateCost()
+        public void CalculateCost()
         {
             double totalCost = 0;
 

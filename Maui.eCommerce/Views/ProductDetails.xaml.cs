@@ -42,8 +42,7 @@ public partial class ProductDetails : ContentPage
         if (ProductId > 0)
         {
             BindingContext = new ProductViewModel(ProductServiceProxy.Current.GetById(ProductId));
-        }
-        else
+        } else
         {
             BindingContext = new ProductViewModel();
         }
@@ -54,8 +53,7 @@ public partial class ProductDetails : ContentPage
         if(ProductId == 0)
         {
             BindingContext = new ProductViewModel();
-        }
-        else
+        } else
         {
             BindingContext = new ProductViewModel(ProductServiceProxy.Current.GetById(ProductId));
         }

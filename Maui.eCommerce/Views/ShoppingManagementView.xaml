@@ -73,7 +73,7 @@
             </Grid>
         </Grid>
         <Label HorizontalTextAlignment="End" Text="{Binding Cost, StringFormat='Total: ${0:F2}'}"/>
-        <Button Text="Go Back" Clicked="CancelClicked"/>
         <Button Text="Checkout" Clicked="CheckoutClicked"/>
+        <Button Text="Go Back" Clicked="CancelClicked"/>
     </VerticalStackLayout>
 </ContentPage>

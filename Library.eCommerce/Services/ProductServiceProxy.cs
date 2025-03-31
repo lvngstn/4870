@@ -34,7 +34,7 @@ namespace Library.eCommerce.Services
         }
 
         private static ProductServiceProxy? instance;
-        private static object instanceLock = new object();
+        private static readonly object instanceLock = new object();
         public static ProductServiceProxy Current
         {
             get
@@ -53,7 +53,6 @@ namespace Library.eCommerce.Services
 
         public List<Item?> Products { get; private set; }
 
-
         public Item AddOrUpdate(Item item)
         {
             if(item.Id == 0)
@@ -63,8 +62,6 @@ namespace Library.eCommerce.Services
                 item.Product.Price = item.Product.Price;
                 Products.Add(item);
             }
-
-
             return item;
         }
 

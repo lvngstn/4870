@@ -30,18 +30,6 @@ namespace Library.eCommerce.Services
             items = new List<Item>();
         }
 
-        private int LastKey
-        {
-            get
-            {
-                if (!CartItems.Any())
-                {
-                    return 0;
-                }
-
-                return CartItems.Select(p => p?.Id ?? 0).Max();
-            }
-        }
         public Item? AddOrUpdate(Item item)
         {
             var existingInvItem = _prodSvc.GetById(item.Id);
@@ -69,50 +57,29 @@ namespace Library.eCommerce.Services
         }
         public Item? DecrementQuantity(Item item)
         {
-
             var existingInvItem = _prodSvc.GetById(item.Id);
             if (existingInvItem == null)
             {
                 return null; // would return an exception in a completed project
-            }
-
-            if (existingInvItem != null)
+            } else
             {
                 existingInvItem.Quantity++;
             }
 
             var existingItem = CartItems.FirstOrDefault(i => i.Id == item.Id);
-            if (existingItem != null && existingItem.Quantity == 0)
+            if (existingItem != null && existingItem.Quantity <= 0)
             {
                 CartItems.Remove(existingItem);
-            }
-            else
+            } else
             {
                 existingItem.Quantity--;
             }
             return existingItem;
         }
 
-        public Item? Delete(int id)
-        {
-            if (id == 0)
-            {
-                return null;
-            }
-
-            Item? product = CartItems.FirstOrDefault(p => p.Id == id);
-            CartItems.Remove(product);
-
-            return product;
-        }
-        public Item? GetById(int id)
-        {
-            return CartItems.FirstOrDefault(p => p.Id == id);
-        }
         public void ClearCart()
         {
             CartItems.Clear();
         }
-
     }
 }

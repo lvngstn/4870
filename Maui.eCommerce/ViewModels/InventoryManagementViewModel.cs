@@ -18,7 +18,6 @@ namespace Maui.eCommerce.ViewModels
         public Item? SelectedProduct { get; set; }
         public string? Query { get; set; }
         private readonly ProductServiceProxy _svc = ProductServiceProxy.Current;
-
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -42,7 +41,7 @@ namespace Maui.eCommerce.ViewModels
         {
             get
             {
-                var filteredList = _svc.Products.Where(p => p?.Product?.Name?.ToLower().Contains(Query?.ToLower() ?? string.Empty) ?? false);
+                var filteredList = _svc.Products.Where(p => p?.Product?.Name?.ToLower().Contains(Query?.ToLower() ?? string.Empty, StringComparison.CurrentCultureIgnoreCase) ?? false);
                 return new ObservableCollection<Item?>(filteredList);
             }
         }

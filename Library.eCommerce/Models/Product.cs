@@ -27,9 +27,12 @@ namespace Spring2025_Samples.Models
 
         public Product(Product? product)
         {
-            Id = product.Id;
-            Name = product.Name;
-            Price = product.Price;
+            if (product != null)
+            {
+                Id = product.Id;
+                Name = product.Name;
+                Price = product.Price;
+            }
         }
 
         public override string ToString()

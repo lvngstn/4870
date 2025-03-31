@@ -13,11 +13,7 @@ public partial class CheckoutView : ContentPage
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
-
-        if (BindingContext is CheckoutViewModel viewModel)
-        {
-            viewModel.RefreshInventory();
-        }
+        (BindingContext as CheckoutViewModel)!.RefreshInventory();
     }
 
     private void CancelClicked(object sender, EventArgs e)

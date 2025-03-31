@@ -20,7 +20,7 @@ namespace Maui.eCommerce.ViewModels
 
             set
             {
-                if (Model != null && Model.Product?.Name != value)
+                if (Model != null && Model.Product?.Name != value && Model.Product?.Name != null)
                 {
                     Model.Product.Name = value;
                 }
@@ -52,7 +52,7 @@ namespace Maui.eCommerce.ViewModels
 
             set
             {
-                if (Model != null && Model?.Product?.Price != value)
+                if (Model != null && Model?.Product?.Price != value && Model?.Product?.Price != null)
                 {
                     Model.Product.Price = value ?? 0;
                 }
@@ -63,7 +63,10 @@ namespace Maui.eCommerce.ViewModels
 
         public void AddOrUpdate()
         {
-            ProductServiceProxy.Current.AddOrUpdate(Model);
+            if (Model != null)
+            {
+                ProductServiceProxy.Current.AddOrUpdate(Model);
+            }
         }
 
         public ProductViewModel()
