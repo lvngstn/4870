@@ -35,7 +35,7 @@
                                     <Label Grid.Column="1" Text="{Binding Product.Name}"/>
                                     <Label Grid.Column="2" Text="x"/>
                                     <Label Grid.Column="3" Text="{Binding Quantity}"/>
-                                    <Button Grid.Column="4" Text="+" Clicked="AddToCartClicked"/>
+                                    <Button Grid.Column="4" Text="+" Command="{Binding AddCommand}" Clicked="InlineClicked"/>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
@@ -65,6 +65,7 @@
                                     <Label Grid.Column="2" Text="x"/>
                                     <Label Grid.Column="3" Text="{Binding Quantity}"/>
                                     <Button Grid.Column="4" Text="-" Clicked="RemoveFromCartClicked"/>
+                                    <!--<Button Grid.Column="4" Text="-" Command="{Binding RemoveCommand}" Clicked="InlineClicked"/>-->
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>

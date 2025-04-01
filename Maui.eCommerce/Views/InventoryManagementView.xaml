@@ -57,7 +57,7 @@
 
                             <Label Grid.Column="0" Text="{Binding Id}"/>
                             <Label Grid.Column="1" Text="{Binding Product.Name}"/>
-                            <Label Grid.Column="2" Text="{Binding Product.Price, StringFormat='${0:F2}'}}"/>
+                            <Label Grid.Column="2" Text="{Binding Product.Price, StringFormat='${0:F2}'}"/>
                             <Button Grid.Column="3" Text="-" Clicked="DecrementQuantityClicked"/>
                             <Label Grid.Column="4" Text="{Binding Quantity}"/>
                             <Button Grid.Column="5" Text="+" Clicked="IncrementQuantityClicked"/>

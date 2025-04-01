@@ -1,13 +1,13 @@
-﻿using Library.eCommerce.DTO;
+﻿using Spring2025_Samples.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Spring2025_Samples.Models
+namespace Library.eCommerce.DTO
 {
-    public class Product
+    public class ProductDTO
     {
         public int Id { get; set; }
         public string? Name { get; set; }
@@ -21,12 +21,12 @@ namespace Spring2025_Samples.Models
             }
         }
 
-        public Product()
+        public ProductDTO()
         {
             Name = string.Empty;
         }
 
-        public Product(Product? product)
+        public ProductDTO(Product? product)
         {
             if (product != null)
             {
@@ -36,7 +36,7 @@ namespace Spring2025_Samples.Models
             }
         }
 
-        public Product(ProductDTO? product)
+        public ProductDTO(ProductDTO? product)
         {
             if (product != null)
             {
