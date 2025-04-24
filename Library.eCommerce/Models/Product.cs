@@ -13,14 +13,6 @@ namespace Spring2025_Samples.Models
         public string? Name { get; set; }
         public int? Price { get; set; }
 
-        public string? Display
-        {
-            get
-            {
-                return $"{Id}. {Name} ${Price}";
-            }
-        }
-
         public Product()
         {
             Name = string.Empty;
@@ -44,11 +36,6 @@ namespace Spring2025_Samples.Models
                 Name = product.Name;
                 Price = product.Price;
             }
-        }
-
-        public override string ToString()
-        {
-            return Display ?? string.Empty;
         }
     }
 }

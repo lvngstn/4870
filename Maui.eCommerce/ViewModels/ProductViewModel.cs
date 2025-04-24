@@ -45,14 +45,10 @@ namespace Maui.eCommerce.ViewModels
 
         public int? Price
         {
-            get
-            {
-                return Model?.Product?.Price;
-            }
-
+            get => Model?.Product?.Price;
             set
             {
-                if (Model != null && Model?.Product?.Price != value && Model?.Product?.Price != null)
+                if (Model?.Product?.Price != value)
                 {
                     Model.Product.Price = value ?? 0;
                 }

@@ -21,7 +21,7 @@ namespace MyApp
             Console.WriteLine("D. Delete an inventory item");
             Console.WriteLine("Q. Quit");
 
-            List<Product?> list = ProductServiceProxy.Current.Products;
+            List<Product?> list = new();
 
             char choice;
             do
@@ -32,10 +32,7 @@ namespace MyApp
                 {
                     case 'C':
                     case 'c':
-                        ProductServiceProxy.Current.AddOrUpdate(new Product
-                        {
-                            Name = Console.ReadLine()
-                        });
+   
                         break;
                     case 'R':
                     case 'r':
@@ -49,10 +46,9 @@ namespace MyApp
                         int selection = int.Parse(Console.ReadLine() ?? "-1");
                         var selectedProd = list.FirstOrDefault(p => p.Id == selection);
 
-                        if(selectedProd != null)
+                        if (selectedProd != null)
                         {
                             selectedProd.Name = Console.ReadLine() ?? "ERROR";
-                            ProductServiceProxy.Current.AddOrUpdate(selectedProd);
                         }
                         break;
                     case 'D':

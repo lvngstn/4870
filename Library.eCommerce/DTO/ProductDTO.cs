@@ -1,25 +1,19 @@
-﻿using Spring2025_Samples.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Google.Cloud.Firestore;
+using Spring2025_Samples.Models;
 
 namespace Library.eCommerce.DTO
 {
+    [FirestoreData]
     public class ProductDTO
     {
+        [FirestoreProperty]
         public int Id { get; set; }
-        public string? Name { get; set; }
-        public int? Price { get; set; }
 
-        public string? Display
-        {
-            get
-            {
-                return $"{Id}. {Name} ${Price}";
-            }
-        }
+        [FirestoreProperty]
+        public string? Name { get; set; }
+
+        [FirestoreProperty]
+        public int? Price { get; set; }
 
         public ProductDTO()
         {
@@ -44,11 +38,6 @@ namespace Library.eCommerce.DTO
                 Name = product.Name;
                 Price = product.Price;
             }
-        }
-
-        public override string ToString()
-        {
-            return Display ?? string.Empty;
         }
     }
 }

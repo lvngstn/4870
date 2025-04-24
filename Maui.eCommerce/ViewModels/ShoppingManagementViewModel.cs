@@ -58,7 +58,12 @@ namespace Maui.eCommerce.ViewModels
             }
         }
 
-        public ShoppingManagementViewModel() => RefreshInventory();
+        public ShoppingManagementViewModel()
+        {
+            _inventory = new ObservableCollection<Item?>();
+            _shoppingCart = new ObservableCollection<Item?>();
+            RefreshInventory();
+        }
 
         public void RefreshInventory()
         {

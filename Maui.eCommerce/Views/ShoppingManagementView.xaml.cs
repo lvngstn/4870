@@ -48,9 +48,4 @@ public partial class ShoppingManagementView : ContentPage
     {
         Shell.Current.GoToAsync("//Checkout");
     }
-
-    private void InlineClicked(object sender, EventArgs e)
-    {
-        (BindingContext as ShoppingManagementViewModel).RefreshInventory();
-    }
 }

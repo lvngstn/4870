@@ -1,4 +1,5 @@
 ﻿using Library.eCommerce.Models;
+using Library.eCommerce.Util;
 using Spring2025_Samples.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,8 @@ namespace Library.eCommerce.Services
             {
                 existingItem.Quantity++;
             }
+
+            var response = new WebRequestHandler().Put($"/Inventory/decrement/{item.Id}", item.Id).Result;
             return existingInvItem;
         }
         public Item? DecrementQuantity(Item item)
@@ -60,7 +63,7 @@ namespace Library.eCommerce.Services
             var existingInvItem = _prodSvc.GetById(item.Id);
             if (existingInvItem == null)
             {
-                return null; // would return an exception in a completed project
+                return null;
             } else
             {
                 existingInvItem.Quantity++;
@@ -70,10 +73,12 @@ namespace Library.eCommerce.Services
             if (existingItem != null && existingItem.Quantity <= 0)
             {
                 CartItems.Remove(existingItem);
-            } else
+            } else if (existingItem != null)
             {
                 existingItem.Quantity--;
             }
+
+            var response = new WebRequestHandler().Put($"/Inventory/increment/{item.Id}", item.Id).Result;
             return existingItem;
         }
 

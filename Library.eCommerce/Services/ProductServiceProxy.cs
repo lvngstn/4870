@@ -1,11 +1,13 @@
 ﻿using Library.eCommerce.DTO;
 using Library.eCommerce.Models;
+using Library.eCommerce.Util;
 using Spring2025_Samples.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Library.eCommerce.Services
 {
@@ -13,27 +15,9 @@ namespace Library.eCommerce.Services
     {
         private ProductServiceProxy()
         {
-            Products = new List<Item?>
-            {
-                new Item{ Product = new ProductDTO{Id = 1, Name = "Headphones", Price = 123}, Id = 1, Quantity = 1 },
-                new Item{ Product = new ProductDTO{Id = 2, Name = "Phone", Price = 456}, Id = 2 , Quantity = 2 },
-                new Item{ Product = new ProductDTO{Id = 3, Name = "Laptop", Price = 789}, Id = 3 , Quantity = 3 }
-            };
+            var productPayload = new WebRequestHandler().Get("/Inventory").Result;
+            Products = JsonConvert.DeserializeObject<List<Item?>>(productPayload) ?? new List<Item?>();
         }
-
-        private int LastKey
-        {
-            get
-            {
-                if(!Products.Any())
-                {
-                    return 0;
-                }
-
-                return Products.Select(p => p?.Id ?? 0).Max();
-            }
-        }
-
         private static ProductServiceProxy? instance;
         private static readonly object instanceLock = new object();
         public static ProductServiceProxy Current
@@ -54,15 +38,42 @@ namespace Library.eCommerce.Services
 
         public List<Item?> Products { get; private set; }
 
+        private int GetNextHighestId()
+        {
+            if (Products == null || !Products.Any())
+            {
+                return 1;
+            }
+
+            return Products
+                .Where(p => p != null)
+                .Max(p => p!.Id) + 1;
+        }
+
         public Item AddOrUpdate(Item item)
         {
-            if(item.Id == 0)
+            if (item.Id == 0)
             {
-                item.Id = LastKey + 1;
-                item.Product.Id = item.Id;
-                item.Product.Price = item.Product.Price;
+                item.Id = GetNextHighestId();
                 Products.Add(item);
             }
+            else
+            {
+                Delete(item.Id);
+                var existingItem = Products.FirstOrDefault(p => p?.Id == item.Id);
+                if (existingItem != null)
+                {
+                    var index = Products.IndexOf(existingItem);
+                    Products.RemoveAt(index);
+                    Products.Insert(index, new Item(item));
+                }
+                else
+                {
+                    Products.Add(item);
+                }
+            }
+
+            var response = new WebRequestHandler().Post("/Inventory/add", item).Result;
             return item;
         }
 
@@ -73,27 +84,31 @@ namespace Library.eCommerce.Services
                 return null;
             }
 
-            Item? product = Products.FirstOrDefault(p => p.Id == id);
+            var result = new WebRequestHandler().Delete($"/Inventory/{id}").Result;
+
+            Item? product = Products.FirstOrDefault(p => p?.Id == id);
             Products.Remove(product);
 
-            return product;
+            return JsonConvert.DeserializeObject<Item>(result ?? "");
         }
 
         public Item? GetById(int id)
         {
-            return Products.FirstOrDefault(p => p.Id == id);
+            return Products.FirstOrDefault(p => p?.Id == id);
         }
 
         public Item? IncrementQuantity(int id)
         {
             var item = GetById(id);
             item?.IncrementQuantity();
+            var response = new WebRequestHandler().Put($"/Inventory/increment/{id}", id).Result;
             return item;
         }
         public Item? DecrementQuantity(int id)
         {
             var item = GetById(id);
             item?.DecrementQuantity();
+            var response = new WebRequestHandler().Put($"/Inventory/decrement/{id}", id).Result;
             return item;
         }
     }
