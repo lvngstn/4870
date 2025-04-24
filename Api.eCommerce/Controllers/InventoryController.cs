@@ -50,11 +50,6 @@ namespace Api.eCommerce.Controllers
             var inventoryEC = new InventoryEC();
             var existingProduct = await inventoryEC.GetProduct(id);
 
-            if (existingProduct == null)
-            {
-                return NotFound($"Product with ID {id} not found.");
-            }
-
             await inventoryEC.UpdateProduct(id, product);
             return Ok($"Product with ID {id} updated successfully.");
         }
@@ -65,11 +60,6 @@ namespace Api.eCommerce.Controllers
             var inventoryEC = new InventoryEC();
             var product = await inventoryEC.IncrementProductQuantity(id);
 
-            if (product == null)
-            {
-                return NotFound($"Product with ID {id} not found.");
-            }
-
             return Ok(product);
         }
 
@@ -78,11 +68,6 @@ namespace Api.eCommerce.Controllers
         {
             var inventoryEC = new InventoryEC();
             var product = await inventoryEC.DecrementProductQuantity(id);
-
-            if (product == null)
-            {
-                return NotFound($"Product with ID {id} not found.");
-            }
 
             return Ok(product);
         }

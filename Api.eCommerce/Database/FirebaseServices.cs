@@ -49,7 +49,6 @@ namespace Api.eCommerce.Database
             CollectionReference collection = db.Collection("products");
             DocumentReference document = await collection.AddAsync(product);
 
-            // Retrieve the added document to construct the Item object
             DocumentSnapshot snapshot = await document.GetSnapshotAsync();
             if (snapshot.Exists)
             {
@@ -110,20 +109,18 @@ namespace Api.eCommerce.Database
 
         public async Task<Item?> IncrementProductQuantity(int productId)
         {
-            // Query the Firestore collection to find the document with the matching Id field
             Query query = db.Collection("products").WhereEqualTo("Id", productId);
             QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
 
             if (querySnapshot.Documents.Count > 0)
             {
-                // Assuming Id is unique, take the first matching document
                 DocumentSnapshot documentSnapshot = querySnapshot.Documents.First();
                 Item? item = documentSnapshot.ConvertTo<Item?>();
 
                 if (item != null)
                 {
-                    item.IncrementQuantity(); // Increment the quantity
-                    await documentSnapshot.Reference.SetAsync(item, SetOptions.MergeAll); // Update the document
+                    item.IncrementQuantity();
+                    await documentSnapshot.Reference.SetAsync(item, SetOptions.MergeAll);
                 }
 
                 return item;
@@ -134,20 +131,18 @@ namespace Api.eCommerce.Database
 
         public async Task<Item?> DecrementProductQuantity(int productId)
         {
-            // Query the Firestore collection to find the document with the matching Id field
             Query query = db.Collection("products").WhereEqualTo("Id", productId);
             QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
 
             if (querySnapshot.Documents.Count > 0)
             {
-                // Assuming Id is unique, take the first matching document
                 DocumentSnapshot documentSnapshot = querySnapshot.Documents.First();
                 Item? item = documentSnapshot.ConvertTo<Item?>();
 
                 if (item != null)
                 {
-                    item.DecrementQuantity(); // Decrement the quantity
-                    await documentSnapshot.Reference.SetAsync(item, SetOptions.MergeAll); // Update the document
+                    item.DecrementQuantity();
+                    await documentSnapshot.Reference.SetAsync(item, SetOptions.MergeAll);
                 }
 
                 return item;

@@ -57,6 +57,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Services\**" />
+	  <Compile Remove="Services\**" />
+	  <EmbeddedResource Remove="Services\**" />
+	  <MauiCss Remove="Services\**" />
+	  <MauiXaml Remove="Services\**" />
+	  <None Remove="Services\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="ViewModels\ItemViewModel.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="FirebaseAdmin" Version="3.1.0" />
 		<PackageReference Include="Google.Cloud.Firestore" Version="3.10.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.3" />
